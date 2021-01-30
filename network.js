@@ -1,7 +1,6 @@
 // Neural Network
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Note: mathjs must be included to use this program.
-// Last updated 28 Dec. 2019. Made by JosCla.
 
 // Creates a basic multilayer perceptron. (Fully Connected Layer)
 function Network(sizes) {

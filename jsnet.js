@@ -1,6 +1,5 @@
 // neural network
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// revised as of 28 Dec. 2019
 
 var output = [];
 var input = [];
@@ -197,7 +196,7 @@ function getSet(num) {
 function drawNum(pic, label) {
     ctx.clearRect(0, 0, 280, 280);
     for (var i = 0; i < pic.length; i++) {
-        var currColor = (pic[i]*256).toString(16).padStart(2, '0');
+        var currColor = Math.floor(pic[i]*256).toString(16).padStart(2, '0');
         ctx.fillStyle = '#' + currColor + currColor + currColor;
         ctx.fillRect(10 * (i % 28), 10 * (Math.floor(i / 28)), 10, 10);
     }
@@ -208,7 +207,7 @@ function drawNum(pic, label) {
 // draws a smaller number, used for the 'draw all' display option
 function drawNumSmall(pic, label, verdict, index) {
     for (var i = 0; i < pic.length; i++) {
-        var colStr = (pic[i]*256).toString(16).padStart(2, '0');
+        var colStr = Math.floor(pic[i]*256).toString(16).padStart(2, '0');
         
         ctx.fillStyle = (verdict === label ? "#00" + colStr + "00" : "#" + colStr + "0000");
         ctx.fillRect(28 * ((index % 100) % 10) + (i % 28), 28 * Math.floor((index % 100) / 10) + Math.floor(i / 28), 1, 1);
