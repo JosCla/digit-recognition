@@ -287,7 +287,7 @@ canvasDraw.onmousemove = function(event) {
 	if (drawMouseDown) {
 		var x = event.layerX - event.srcElement.offsetLeft;
 		var y = event.layerY - event.srcElement.offsetTop;
-		canvasDrawAt(ctxDraw, x, y, 6);
+		canvasDrawAt(ctxDraw, x, y, 10);
 	}
 }
 canvasDraw.onmouseup = function() {
