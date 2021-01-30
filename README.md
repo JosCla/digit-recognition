@@ -7,4 +7,4 @@ The handwritten digits used are from the MNIST Database of Handwritten Digits, w
 This program also makes use of the math.js library, which can be found here: https://mathjs.org/
 
 ## Usage
-Go to https://joscla.github.io/digit-recognition/ to try out the program!
+Go to https://joscla.github.io/digit-recognition/jsnet.html to try out the program!
