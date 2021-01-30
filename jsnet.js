@@ -263,9 +263,92 @@ function drawGraph(successArr, costArr) {
 
 // returns index of max value in array
 function maxIndex(arr) {
-    var max = -Infinity; var ind = -1;
-    for (var i in arr) {if (arr[i] > max) {max = arr[i]; ind = i;}}
-    return parseInt(ind);
+    var max = arr[0]; var ind = 0;
+		for (var i = 1; i < arr.length; ++i) {
+			if (arr[i] > max) {
+				max = arr[i];
+				ind = i;
+			}
+		}
+    return ind;
+}
+
+// picture drawing
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var canvasDraw = document.getElementById('drawing');
+var ctxDraw = canvasDraw.getContext('2d');
+var drawMouseDown = false;
+
+// handling clicking/dragging on the canvas
+canvasDraw.onmousedown = function() {
+	drawMouseDown = true;
+}
+canvasDraw.onmousemove = function(event) {
+	if (drawMouseDown) {
+		var x = event.layerX - event.srcElement.offsetLeft;
+		var y = event.layerY - event.srcElement.offsetTop;
+		canvasDrawAt(ctxDraw, x, y, 6);
+	}
+}
+canvasDraw.onmouseup = function() {
+	drawMouseDown = false;
+}
+canvasDraw.onmouseout = function() {
+	drawMouseDown = false;
+}
+
+// drawing button interaction
+document.getElementById('btn-drawing-test').onclick = function() {
+	var output = testDrawing();
+	document.getElementById('drawing-result').textContent = "Result: " + output;
+}
+document.getElementById('btn-drawing-clear').onclick = function() {
+	ctxDraw.clearRect(0, 0, canvasDraw.width, canvasDraw.height);
+}
+
+// fills in a circle at the given point with a given size
+function canvasDrawAt(context, x, y, size) {
+	context.fillStyle = '#000000';
+	for (var i = -size; i < size; ++i) {
+		for (var j = -size; j < size; ++j) {
+			// finding distance from the center
+			var dx = Math.abs(i);
+			var dy = Math.abs(j);
+			var dist = Math.sqrt((dx*dx) + (dy*dy));
+
+			// if the distance is less than the given size, we put a pixel there
+			if (dist < size) {
+				context.fillRect(x+i, y+j, 1, 1);
+			}
+		}
+	}
+}
+
+// tests the picture in the canvas
+function testDrawing() {
+	// getting the relevant pixel data
+	var dataDraw = ctxDraw.getImageData(0, 0, 280, 280).data;
+
+	// taking the stuff in the drawing array and making it into a valid input
+	var pixels = [];
+	for (var row = 0; row < 28; ++row) {
+		for (var col = 0; col < 28; ++col) {
+			var sum = 0;
+			for (var y = 0; y < 10; ++y) {
+				for (var x = 0; x < 10; ++x) {
+					var dataPos = (((row * 10) + y) * 280 + (col * 10) + x) * 4 + 3;
+					sum += dataDraw[dataPos] / 255;
+				}
+			}
+			
+			var avg = sum / 100;
+			pixels[row * 28 + col] = avg;
+		}
+	}
+
+	// performing the test, finding the output digit
+	var result = digit.net.processInput(pixels);
+	return maxIndex(result['_data'][0]);
 }
 
 // getting and receiving text files
