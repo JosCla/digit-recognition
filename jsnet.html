@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>neural net</title>
+        
+        <style>
+            h1 {
+                background-color: lightgray;
+            }
+            
+            h2 {
+                margin-top: 15px;
+                margin-bottom: 5px;
+            }
+            
+            body {
+                font-family: 'Arial';
+            }
+            
+            td {
+                text-align: center;
+            }
+            
+            .btn-ui {
+                float: left;
+                border: 1px solid black;
+                width: 120px;
+                height: 20px;
+                font-size: 12pt;
+                text-align: center;
+                cursor: pointer;
+                padding: 2px;
+            }
+            
+            .selected {
+                background-color: lightgray;
+            }
+            
+            .tbodd {
+                background-color: lightgray;
+            }
+            
+            .tbeven {
+                background-color: darkgray;
+            }
+            
+            .tbmode {
+                border-left: 1px solid black;
+            }
+            
+            .tboptionsright {
+                width: 50px;
+            }
+        </style>
+        
+        <script src='./../../libs/math.min.js'></script>
+    </head>
+
+    <body>
+        <h1>Neural Network</h1>
+        
+        <div id='loading'>
+        
+            <div id='loading-input'>Loading input... </div><br>
+            <div id='loading-output'>Loading output... </div>
+        
+        </div>
+        
+        <div id='main' style='display: none;'>
+            
+            <div id='ui'>
+                <div id='ui-select'>
+                    <div id='open-test' class='selected btn-ui' onclick='changeTab("test");'>Test Network</div>
+                    <div id='open-settings' class='btn-ui' onclick='changeTab("settings");'>Settings</div>
+                </div><br>
+                
+                <div id='div-test'>             
+                    <h2>Test Network</h2>
+                    
+                    <button onclick='digit.startDoTest();' id='autotest' style='background-color: lightgray; padding: 2px; width: 400px; height: 70px; font-size: 20px;'>Test a Set</button><br>
+                    <input id='continue' type='checkbox'> Repeat After Finished<br>
+                </div>
+                
+                <div id='div-settings' style='display: none'>
+                    <h2>Settings</h2>
+                    <table>
+                        <col width="150">
+                        <col width="100">
+                        <tbody>
+                            <tr class='tbodd' style='padding: 2px;'>
+                                <td>Mini-Set Size:</td>
+                                <td class='tboptionsright'><input id='index-size' type='number' value='100' style='width: 80px;'></td>
+                            </tr>
+                            <tr class='tbeven' style='padding: 2px;'>
+                                <td>Learn From Tests: </td>
+                                <td class='tboptionsright'><input id='learn' type='checkbox' checked=true></td>
+                            </tr>
+                            <tr class='tbodd' style='padding: 2px;'>
+                                <td>Learn Speed: </td>
+                                <td class='tboptionsright'><input id='learn-speed' type='number' value='1' style='width: 80px;'></td>
+                            </tr>
+                            <tr class='tbeven' style='padding: 2px;'>
+                                <td>Test Speed: </td>
+                                <td class='tboptionsright'>
+                                    <input id='speed-slow' name='test-speed' type=radio checked=true> <span style='font-size: 12px;'>Slow/Visual</span><br>
+                                    <input id='speed-fast' name='test-speed' type=radio> <span style='font-size: 12px;'>Fast/Simple</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <button id='init' onclick='init();' style='background-color: white; padding: 2px;'>Reset Network</button>
+                </div>
+            </div><br>
+            
+            <div id='label'>Label: NaN</div>
+            <div id='output-cont' style='border: 1px solid black; width: 484px; height: 317px; position: relative;'>
+                <canvas id='canv' height=280px width=280px style='border: 1px solid black; float: left;'></canvas>
+            
+                <div id='output' style='border: 1px solid black; width: 190px; height: 270px; float: left; position: relative; padding: 5px;'>
+                    <div id='output-text'>
+                        Output: <br><br>
+                    </div>
+                    <div style='position: absolute; bottom: 5px;'>
+                        <input id='disp-output-text' type='checkbox' checked=true> Show Output Text
+                    </div>
+                </div>
+                
+                <div id='output-mode' style='border: 1px solid black; width: 472px; height: 25px; position: absolute; bottom: 0px; padding: 5px;'
+                     onchange = 'ctx.clearRect(0, 0, 280, 280);' border=1>
+                    <table height=25px>
+                        <tbody>
+                            <tr>
+                                <th>Display Mode:</th>
+                                <td class='tbmode'><input id='dispmode-one' type='radio' name='display-mode'>Draw One</td>
+                                <td class='tbmode'><input id='dispmode-all' type='radio' name='display-mode' checked=true>Draw All</td>
+                                <td class='tbmode'><input id='dispmode-none' type='radio' name='display-mode'>None</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><br>
+            
+            <canvas id='results' width=482px height=200px style='border: 2px solid black;'></canvas><br>
+            Key: <span style='color: blue;'>Success Rate - Blue</span> | <span style='color: red'>Cost - Red</span><br>
+            <input id='show-graph' type=checkbox checked=true> Update Graph
+            
+        </div>
+        
+    </body>
+    
+    <script src="network.js"></script>
+    <script src="jsnet.js"></script>
+    
+</html>
