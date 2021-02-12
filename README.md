@@ -1,5 +1,5 @@
 # digit-recognition
-A site demonstrating digit recognition with use of neural networks. This site is made to help visualize the network's learning, and to allow the user to track and customize the learning. 
+A site demonstrating digit recognition with use of neural networks, made c. January 2019. This site is made to help visualize the network's learning, and to allow the user to track and customize the learning. 
 
 The network itself is a basic fully-connected layer, which uses backpropagation calculus to change its weights and biases to better recognize each digit it is given.
 
